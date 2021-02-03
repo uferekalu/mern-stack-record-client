@@ -1,0 +1,17 @@
+import axios from 'axios';
+
+const baseUrl = 'http://localhost:4000/'
+
+export default {
+    postResult(url=baseUrl+'postrecord/')
+    {
+        return {
+            fetchAll: () => axios.get(url),
+            fetchById: id => axios.get(url+id),
+            create: newRecord => axios.post(url+'signup', newRecord),
+            login: record => axios.post(url+'login', record),
+            update: (id, updatedRecord) => axios.put(url+id, updatedRecord),
+            delete: id => axios.delete(url+id)
+        }
+    }
+}
