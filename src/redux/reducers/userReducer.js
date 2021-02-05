@@ -19,10 +19,7 @@ export default function(state = initialState, action) {
                 authenticated: true
             }
         case SET_UNAUTHENTICATED:
-            return {
-                ...state,
-                authenticated: false
-            }
+            return initialState
         case SET_USER:
             return {
                 authenticated: true,
@@ -34,7 +31,6 @@ export default function(state = initialState, action) {
                 list: state.list.filter(x => x._id !== action.payload)
             };
         case FILTER_BY_NAME: 
-            let newState = Object.assign({}, state);
             let value = action.payload.value
             return {
                 ...state,

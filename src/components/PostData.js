@@ -25,6 +25,7 @@ import { TableRow } from '@material-ui/core';
 import { TableCell } from '@material-ui/core';
 import { TableHead } from '@material-ui/core';
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom';
 
 
 
@@ -204,29 +205,35 @@ const PostData = ({classes, ...props}) => {
                     <Paper className={classes.paper}>
                             <Typography className={classes.intro}>
                                 This Demo App uses MongoDB to store records of students who registered for tutorial courses on various departments of their choosing.
-                                With login system, one can add some records and be redirected to home page where they would have access to their profile page. 
+                              {props.authenticated ? 'With login system' : <Link to={`/login`}>With login system</Link> }, one can add some records and be redirected to home page where they would have access to their profile page. 
                                 The profile page is still being developed.
                                 Accordions are used to show the message describing a little about them, their departments, the number of courses registered
                                 and the total amount.
                             </Typography>
                         <Toolbar>
-                            <Controls.Input
-                                className={classes.searchInput}
-                                label="Search by name"
-                                    InputProps ={{
-                                        startAdornment:(<InputAdornment position="start">
-                                            <Search />
-                                        </InputAdornment>)
-                                    }}
-                                onChange={e => {filterByInput(e)}}
-                            />
-                            <Controls.Button
-                                text="Add New"
-                                variant="outlined"
-                                className={classes.newButton}
-                                startIcon={<AddIcon />}
-                                onClick={() => {setOpenPopup(true); setCurrentId(0) }}
-                            />
+                            {
+                                props.authenticated && (
+                                    <>
+                                        <Controls.Input
+                                            className={classes.searchInput}
+                                            label="Search by name"
+                                                InputProps ={{
+                                                    startAdornment:(<InputAdornment position="start">
+                                                        <Search />
+                                                    </InputAdornment>)
+                                                }}
+                                            onChange={e => {filterByInput(e)}}
+                                        />
+                                        <Controls.Button
+                                            text="Add New"
+                                            variant="outlined"
+                                            className={classes.newButton}
+                                            startIcon={<AddIcon />}
+                                            onClick={() => {setOpenPopup(true); setCurrentId(0) }}
+                                        />
+                                    </>
+                                )
+                            }
                             
                         </Toolbar>
                         <div className={`${classes.root} ${classes.accordion}`}>
@@ -288,10 +295,9 @@ const PostData = ({classes, ...props}) => {
                                                     </TableBody>
                                                 </Typography>
                                             </AccordionDetails>
-                                            {
+                                            {/* {
                                                 props.authenticated && (
                                                     <div className={classes.actionDiv}>
-                                                        {record.email === 'dekalusha@gmail.com' && (
                                                             <>
                                                                 <Button 
                                                                     variant="contained"
@@ -319,14 +325,10 @@ const PostData = ({classes, ...props}) => {
                                                                     Delete
                                                                 </Button>
                                                             </>
-                                                        )
-                                                
-                                                        }
-                                                        
                                                     </div>
                                                     
                                                 )
-                                            }
+                                            } */}
                                         </Accordion>
                                     )
                                 })
